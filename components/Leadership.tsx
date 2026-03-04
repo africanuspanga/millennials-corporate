@@ -1,33 +1,40 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import { Linkedin, Mail, Award, Briefcase } from 'lucide-react'
+import { Linkedin, Mail, ArrowRight } from 'lucide-react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 const leaders = [
   {
     name: 'Gabriel Mpogole',
     role: 'Founder & Principal Consultant',
     image: '/GABRIEL MPOGOLE.png',
-    bio: `Gabriel Mpogole is a corporate strategist and governance advisor with extensive executive experience across Tanzania's mining, manufacturing, energy, agriculture, commerce, and public sectors.
-
-He holds an MBA in Corporate Management and a Bachelor of Public Administration (HRM) from Mzumbe University and is currently pursuing a Master of Science in Strategy and Business Management.
-
-Gabriel has held leadership roles within organizations including Barrick Gold, Panafrican Mining Services, Coca-Cola Kwanza, Mbeya Cement Company, Olam Tanzania, BP Tanzania, TANESCO, and G4S Security Services.
-
-His expertise spans corporate governance, workforce strategy, organizational performance management, and institutional advisory.`,
+    bio: `Gabriel Mpogole is a seasoned corporate strategist and governance advisor with extensive executive-level experience across Tanzania's mining, manufacturing, energy, agriculture, commerce, security, and public sectors.`,
+    extendedBio: `He holds an MBA in Corporate Management and a Bachelor of Public Administration (HRM) from Mzumbe University and is currently pursuing a Master of Science in Strategy & Business Management. He is also a Certified Balanced Scorecard Practitioner.`,
     expertise: ['Corporate Governance', 'Workforce Strategy', 'Performance Management', 'Institutional Advisory'],
+    slug: 'gabriel-mpogole',
+    hasImage: true
+  },
+  {
+    name: 'Revocatus Vincent Fivawo',
+    role: 'Senior Consultant – HR & Project Management',
+    image: '',
+    bio: `Revocatus Fivawo is a distinguished HR Business Consultant, Certified Project Management Professional (PMP), and highly accredited corporate trainer with over a decade of progressive experience.`,
+    extendedBio: `He holds an MSc in Project Planning and Management, a Master's in Strategic HR Management, and is a PMI Authorized Training Partner Instructor with a 90% PMP exam pass rate among 300+ candidates mentored.`,
+    expertise: ['HR Consulting', 'PMP Training', 'Project Management', 'Organizational Development'],
+    slug: 'revocatus-fivawo',
+    hasImage: false
   },
   {
     name: 'Evarist Joseph',
     role: 'Senior Consultant – Legal Advisory',
-    image: '/images/evarist.jpg',
-    bio: `Evarist Joseph is a corporate lawyer based in Dar es Salaam with extensive experience in corporate and commercial law.
-
-His advisory work includes company formation, regulatory compliance, contract negotiation, corporate governance, and commercial transactions.
-
-He supports organizations in navigating complex legal frameworks while protecting commercial interests.`,
+    image: '',
+    bio: `Evarist Joseph is a corporate lawyer based in Dar es Salaam with over six years of professional experience in corporate and commercial law, and a graduate of the University of Dar es Salaam.`,
+    extendedBio: `His advisory work includes company formation, regulatory compliance, contract negotiation, corporate governance, and commercial transactions. He supports organizations in navigating complex legal frameworks.`,
     expertise: ['Corporate Law', 'Regulatory Compliance', 'Contract Negotiation', 'Commercial Transactions'],
+    slug: 'evarist-joseph',
+    hasImage: false
   },
 ]
 
@@ -71,23 +78,22 @@ export default function Leadership() {
           <div className="w-24 h-1 bg-secondary mx-auto" />
           <p className="mt-6 text-gray-600 text-lg max-w-2xl mx-auto">
             Experienced professionals with deep expertise across corporate governance, 
-            legal advisory, and institutional consulting.
+            legal advisory, HR consulting, and institutional advisory.
           </p>
         </div>
 
         {/* Leaders Grid */}
-        <div className="grid md:grid-cols-2 gap-10 lg:gap-16">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {leaders.map((leader, index) => (
             <div
               key={index}
               className="reveal opacity-0 translate-y-8 transition-all duration-700"
               style={{ transitionDelay: `${index * 200}ms` }}
             >
-              <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100">
+              <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 h-full flex flex-col">
                 {/* Image Area */}
-                <div className="relative h-80 bg-gradient-to-br from-primary to-primary-dark overflow-hidden">
-                  {index === 0 ? (
-                    /* Gabriel's Photo */
+                <div className="relative h-72 bg-gradient-to-br from-primary to-primary-dark overflow-hidden">
+                  {leader.hasImage ? (
                     <Image
                       src={leader.image}
                       alt={leader.name}
@@ -95,7 +101,7 @@ export default function Leadership() {
                       className="object-cover object-top"
                     />
                   ) : (
-                    /* Placeholder for Evarist */
+                    /* Placeholder for those without images */
                     <>
                       <div className="absolute inset-0 opacity-20">
                         <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
@@ -108,8 +114,8 @@ export default function Leadership() {
                         </svg>
                       </div>
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-32 h-32 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border-2 border-white/30">
-                          <span className="font-display text-5xl text-white font-semibold">
+                        <div className="w-28 h-28 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border-2 border-white/30">
+                          <span className="font-display text-4xl text-white font-semibold">
                             {leader.name.split(' ').map(n => n[0]).join('')}
                           </span>
                         </div>
@@ -121,24 +127,25 @@ export default function Leadership() {
                 </div>
 
                 {/* Content */}
-                <div className="p-8 -mt-12 relative">
+                <div className="p-6 -mt-12 relative flex-1 flex flex-col">
                   {/* Name Card */}
-                  <div className="bg-primary text-white p-6 rounded-xl shadow-lg mb-6">
-                    <h3 className="font-display text-2xl mb-1">{leader.name}</h3>
-                    <p className="text-white/80 font-medium">{leader.role}</p>
+                  <div className="bg-primary text-white p-5 rounded-xl shadow-lg mb-5">
+                    <h3 className="font-display text-xl mb-1">{leader.name}</h3>
+                    <p className="text-white/80 text-sm font-medium">{leader.role}</p>
                   </div>
 
                   {/* Bio */}
-                  <div className="prose prose-gray mb-6">
-                    {leader.bio.split('\n\n').map((paragraph, pIndex) => (
-                      <p key={pIndex} className="text-gray-600 leading-relaxed mb-4 text-sm">
-                        {paragraph}
-                      </p>
-                    ))}
+                  <div className="prose prose-gray mb-4 flex-1">
+                    <p className="text-gray-600 leading-relaxed text-sm mb-3">
+                      {leader.bio}
+                    </p>
+                    <p className="text-gray-500 leading-relaxed text-sm">
+                      {leader.extendedBio}
+                    </p>
                   </div>
 
                   {/* Expertise Tags */}
-                  <div className="flex flex-wrap gap-2 mb-6">
+                  <div className="flex flex-wrap gap-2 mb-5">
                     {leader.expertise.map((skill, sIndex) => (
                       <span 
                         key={sIndex}
@@ -149,17 +156,14 @@ export default function Leadership() {
                     ))}
                   </div>
 
-                  {/* Contact Links */}
-                  <div className="flex gap-4 pt-4 border-t border-gray-100">
-                    <button className="flex items-center gap-2 text-gray-500 hover:text-primary transition-colors text-sm">
-                      <Linkedin size={18} />
-                      <span>LinkedIn</span>
-                    </button>
-                    <button className="flex items-center gap-2 text-gray-500 hover:text-primary transition-colors text-sm">
-                      <Mail size={18} />
-                      <span>Email</span>
-                    </button>
-                  </div>
+                  {/* Learn More Button */}
+                  <Link
+                    href={`/team/${leader.slug}`}
+                    className="group w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-primary text-white font-semibold rounded-lg transition-all duration-300 hover:bg-primary-dark hover:shadow-lg"
+                  >
+                    Learn More
+                    <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
+                  </Link>
                 </div>
               </div>
             </div>
